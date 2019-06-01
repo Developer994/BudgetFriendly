@@ -103,13 +103,11 @@
             if (value == "all") {
                 $.get("/transactions").then(function (data) {
                     $("#tableContainer").html(data);
-
                 })
             } else {
                 var Mdate = moment().subtract(parseInt(value), 'months').format();
                 //console.log("one month back ", Mdate);
                 $.get("/transactions", { 'from': Mdate }).then(function (data) {
-
                     $("#tableContainer").html(data);
                 })
             }
