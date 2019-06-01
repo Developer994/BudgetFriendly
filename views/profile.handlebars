@@ -80,13 +80,22 @@
     </div>
     <br>
     <br>
+    <div class="row">
+        <div id="tableContainer"></div>
+        {{!-- canvas and script for chart --}}
+        <div class="card" style="width: 30rem; background:none; float:right;">
+            <div class="card-body">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
 
-    <div id="tableContainer"></div>
     <script>
         function populateTransactions(value) {
             if (value == "all") {
                 $.get("/transactions").then(function (data) {
                     $("#tableContainer").html(data);
+                    console.log()
                 })
             } else {
                 var Mdate = moment().subtract(parseInt(value), 'months').format();
@@ -104,6 +113,18 @@
         });
         populateTransactions("all");
     </script>
+
+
+
+    <script>
+        var ctx = $("#myChart");
+        var chart = new Chart(ctx, {
+            type: "pie",
+            data: { datasets: [{ data: [1, 2, 5, 1, 1, 5] }] }
+        });
+
+    </script>
+
     <div class="row justify-content-center">
 
         <br><br>
