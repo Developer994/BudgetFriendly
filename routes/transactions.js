@@ -9,7 +9,6 @@ var auth = require("../config/middleware/auth");
 // =============================================================
 // Get route for retrieving a single User information
 router.get("/transactions", function(req, res) {
-  console.log(req.query.from);
   var startFromDate = "1970-01-01T00:00:00Z";
   if (req.query && req.query.from) {
     startFromDate = req.query.from;
@@ -29,6 +28,7 @@ router.get("/transactions", function(req, res) {
         category: txns[i].category,
         amount: txns[i].amount
       });
+      // console.log(txnsCopy);
     }
 
     res.render("transactions", {
@@ -56,4 +56,32 @@ router.post("/profile", function(req, res) {
     res.redirect("/profile");
   });
 });
+
+router.get("/chart", function(req, res) {
+  var startFromDate = "1970-01-01T00:00:00Z";
+  if (req.query && req.query.from) {
+    startFromDate = req.query.from;
+  }
+  db.Transactions.findAll({
+    where: {
+      UserId: req.user.id,
+      createdAt: { [Sequelize.Op.gt]: startFromDate }
+    }
+  }).then(function(data) {
+    var amount = 0;
+    var dataArray = [];
+    for (var i = 0; i < data.length; i++) {
+      amount = amount + parseFloat(data[i].amount);
+      dataArray.push({
+        createdAt: moment(data[i].createdAt).format("LLL"),
+        category: data[i].category,
+        amount: data[i].amount
+      });
+      // console.log(txnsCopy);
+    }
+
+    res.send(dataArray);
+  });
+});
+
 module.exports = router;

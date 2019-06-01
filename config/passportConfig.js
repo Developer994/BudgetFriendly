@@ -19,7 +19,7 @@ passport.use(
         if (!user) {
           console.log("user not found");
           errors.push("User does not exist");
-          return done(null, false, { errors: "User does not exist" });
+          return done(null, false, { message: "User does not exist" });
         }
 
         // compare password
@@ -29,7 +29,7 @@ passport.use(
             return done(null, user);
           } else {
             errors.push("Password is incorrect");
-            return done(null, false, { errors: "Password is incorrect" });
+            return done(null, false, { message: "Password is incorrect" });
           }
         });
       });
