@@ -27,9 +27,6 @@ router.post(
   passport.authenticate("local", { failureRedirect: "login" }),
   function(req, res) {
     res.redirect("/profile");
-    db.User.findOne({ where: { email: req.body.email } }).then(function(user) {
-      var id = user.id;
-    });
   }
 );
 
@@ -71,7 +68,7 @@ router.post("/register", function(req, res) {
             name: name,
             email: email,
             password: password
-          }).then(res.render("login", { success }));
+          }).then(res.render("login", { success, style: "styleLogin.css" }));
         });
       }
     });

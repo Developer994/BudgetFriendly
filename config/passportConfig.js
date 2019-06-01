@@ -4,7 +4,6 @@ var bcrypt = require("bcrypt");
 
 var db = require("../models");
 var errors = [];
-
 passport.use(
   new LocalStrategy(
     // change default sign-in from username to email
@@ -20,7 +19,7 @@ passport.use(
         if (!user) {
           console.log("user not found");
           errors.push("User does not exist");
-          return done(null, false, { errors });
+          return done(null, false, { errors: "User does not exist" });
         }
 
         // compare password
@@ -29,16 +28,15 @@ passport.use(
           if (passwordMatch) {
             return done(null, user);
           } else {
-            return done(null, false, {
-              message: "Password is incorrect"
-            });
+            errors.push("Password is incorrect");
+            return done(null, false, { errors: "Password is incorrect" });
           }
         });
       });
     }
   )
 );
-
+console.log(errors);
 passport.serializeUser(function(user, cb) {
   cb(null, user.id);
 });

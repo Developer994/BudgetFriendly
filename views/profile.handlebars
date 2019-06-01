@@ -81,10 +81,18 @@
     <br>
     <br>
     <div class="row">
-        <div id="tableContainer"></div>
-        {{!-- canvas and script for chart --}}
-        <div class="card" style="width: 30rem; background:none; float:right;">
-            <div class="card-body">
+        <div class="col-6">
+            <div id="tableContainer"></div>
+            <br><br>
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                    data-whatever="@mdo">New Transaction</button>
+            </div>
+        </div>
+
+        {{!-- canvas for chart --}}
+        <div class="col-6">
+            <div>
                 <canvas id="myChart"></canvas>
             </div>
         </div>
@@ -95,7 +103,7 @@
             if (value == "all") {
                 $.get("/transactions").then(function (data) {
                     $("#tableContainer").html(data);
-                    console.log()
+
                 })
             } else {
                 var Mdate = moment().subtract(parseInt(value), 'months').format();
@@ -112,11 +120,8 @@
             populateTransactions(event.target.value);
         });
         populateTransactions("all");
-    </script>
 
-
-
-    <script>
+        // chart code
         var ctx = $("#myChart");
         var chart = new Chart(ctx, {
             type: "pie",
@@ -127,74 +132,71 @@
 
     <div class="row justify-content-center">
 
-        <br><br>
-        <div class="row justify-content-center">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                data-whatever="@mdo">New Transaction</button>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">New Transaction</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="/profile" method="POST">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="inputCategory">Category:</label>
-                                    <select id="inputCategory" class="form-control" name="category">
-                                        <option value="Utilities" selected>Utilities</option>
-                                        <option value="Health">Health</option>
-                                        <option value="Housing">Housing</option>
-                                        <option value="Grocery">Grocery</option>
-                                        <option value="Automotive">Automotive</option>
-                                        <option value="Enterntainment">Enterntainment</option>
-                                        <option value="Education">Education</option>
-                                        <option value="Misc">Misc</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Amount:</label>
-                                    <input type="number" class="form-control" id="amount" name="amount">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" id="addButton" value="Add Transaction" />
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </form>
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Transaction</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    <form action="/profile" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputCategory">Category:</label>
+                                <select id="inputCategory" class="form-control" name="category">
+                                    <option value="Utilities" selected>Utilities</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Housing">Housing</option>
+                                    <option value="Grocery">Grocery</option>
+                                    <option value="Automotive">Automotive</option>
+                                    <option value="Enterntainment">Enterntainment</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Misc">Misc</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Amount:</label>
+                                <input type="number" class="form-control" id="amount" name="amount">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" id="addButton" value="Add Transaction" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
     </div>
+    <br>
+    <br>
+    <br>
+</div>
 
 
-    <footer>
-        <div class="footer">&copy; Copyright 2019</div>
-    </footer>
+<footer>
+    <div class="footer">&copy; Copyright 2019</div>
+</footer>
 
-    <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: black;
-            color: white;
-            text-align: center;
-        }
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
 
-        th {
-            background-color: grey;
-            color: white;
-        }
-    </style>
+    th {
+        background-color: grey;
+        color: white;
+    }
+</style>
